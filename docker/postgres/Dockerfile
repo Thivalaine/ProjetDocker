@@ -25,7 +25,7 @@ RUN initdb -D $PGDATA
 
 # Ajout du fichier de configuration  dans le bon répertoire
 COPY postgresql.conf /etc/postgresql/postgresql.conf
-# COPY pg_hba.conf /var/lib/postgresql/data 
+# COPY pg_hba.conf /var/lib/postgresql/data
 COPY pg_hba.conf /etc/postgresql/pg_hba.conf
 
 # Commande de démarrage de PostgreSQL

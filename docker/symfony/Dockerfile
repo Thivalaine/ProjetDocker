@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     php-fpm \
     php-pdo \
     php-pdo_mysql \
+    php-pdo_pgsql \
     php-json \
     php-openssl \
     php-curl \
@@ -45,7 +46,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 COPY . /var/www/symfony
 
 # Installer les dépendances avec Composer (décommentez si nécessaire)
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Exposer le port utilisé par le serveur web Symfony
 EXPOSE 8000

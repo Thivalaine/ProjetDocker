@@ -1,39 +1,43 @@
 version: '3.8'
 
 services:
-  adminer:
+  symfony:
     build:
-      context: ./docker/adminer
+      context: ./docker/symfony
+    image: nirdeo/symfony_custom:latest
+    environment:
+      DATABASE_URL: "postgresql://myusername:mypassword@postgres:5432/mydatabase?serverVersion=13&charset=utf8"
     ports:
-      - "8080:8080"
+      - "8000:8000"
+    volumes:
+      - ./docker/symfony:/var/www/symfony
+    depends_on:
+      - postgres
 
   composer:
-    build:
-      context: ./docker/composer
+    image: nirdeo/composer_custom:latest
     volumes:
-      - ./app/symfony:/app
+      - ./docker/symfony:/app
 
   postgres:
     build:
       context: ./docker/postgres
+    image: nirdeo/postgres_custom:latest
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myusername
+      POSTGRES_PASSWORD: mypassword
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: symfony
-      POSTGRES_USER: symfony
-      POSTGRES_PASSWORD: symfony
     ports:
       - "5432:5432"
 
-  symfony:
+  adminer:
     build:
-      context: ./docker/symfony
-    volumes:
-      - ./app/symfony:/var/www/symfony
+      context: ./docker/adminer
+    image: nirdeo/adminer_custom:latest
     ports:
-      - "8000:8000"
-    depends_on:
-      - postgres
+      - "8080:8080"
 
 volumes:
   postgres_data:
