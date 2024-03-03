@@ -1,18 +1,16 @@
 version: '3.8'
 
+networks:
+  mon_reseau:
+
 services:
   adminer:
     build:
       context: ./docker/adminer
     ports:
       - "8080:8080"
-
-  composer:
-    image: composer:latest
-    build:
-      context: ./docker/composer
-    volumes:
-      - ./symfony:/app
+    networks:
+      - mon_reseau
 
   postgres:
     build:
@@ -25,16 +23,29 @@ services:
       POSTGRES_PASSWORD: symfony
     ports:
       - "5432:5432"
+    networks:
+      - mon_reseau
 
   symfony:
     build:
       context: ./docker/symfony
     volumes:
-      - ./symfony:/var/www/symfony
+      - ./app/symfony:/var/www/symfony
     ports:
       - "8000:8000"
     depends_on:
       - postgres
+    networks:
+      - mon_reseau
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./symfony:/app
+    command: ["install"]
+    networks:
+      - mon_reseau
 
 volumes:
   postgres_data:
+
