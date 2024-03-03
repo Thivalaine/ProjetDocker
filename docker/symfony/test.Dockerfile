@@ -25,14 +25,6 @@ RUN apk add --no-cache \
     php-iconv \
     php-tokenizer
 
-# Installer les dépendances pour wget et tar
-RUN apk add --no-cache wget tar
-
-# Télécharger et installer Symfony CLI
-RUN wget https://github.com/symfony-cli/symfony-cli/releases/latest/download/symfony-cli_linux_amd64.tar.gz -O symfony-cli.tar.gz
-RUN tar -zxvf symfony-cli.tar.gz -C /usr/local/bin/ symfony
-RUN rm symfony-cli.tar.gz
-
 # Configurer le répertoire de travail
 WORKDIR /var/www/symfony
 
@@ -47,8 +39,8 @@ COPY . /var/www/symfony
 # Installer les dépendances avec Composer (décommentez si nécessaire)
 RUN composer install --no-dev --optimize-autoloader
 
-# Exposer le port utilisé par le serveur web Symfony
-EXPOSE 8000
+# Exposer le port (définissez le port selon votre configuration)
+EXPOSE 80
 
-# Démarrer le serveur Symfony
-CMD ["symfony", "server:start", "--no-tls", "--port=8000"]
+# Commande pour démarrer le serveur PHP (ajustez selon vos besoins)
+CMD php -S 0.0.0.0:80 -t public
