@@ -10,14 +10,14 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./docker/symfony:/var/www/symfony
+      - ./app/symfony:/var/www/symfony
     depends_on:
       - postgres
 
   composer:
     image: nirdeo/composer_custom:latest
     volumes:
-      - ./docker/symfony:/app
+      - ./app/symfony:/app
 
   postgres:
     build:
