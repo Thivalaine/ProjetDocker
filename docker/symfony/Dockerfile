@@ -1,3 +1,5 @@
+# Symfony Dockerfile
+
 # Utiliser Alpine Linux comme image de base
 FROM alpine:latest
 

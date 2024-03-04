@@ -1,3 +1,5 @@
+# Postgres Dockerfile
+
 # Utiliser l'image Alpine de base pour PostgreSQL
 FROM alpine:latest
 
