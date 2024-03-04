@@ -7,6 +7,7 @@ RUN apk add --no-cache \
     php-fpm \
     php-pdo \
     php-pdo_mysql \
+    php-pdo_pgsql \
     php-json \
     php-session \
     php-simplexml \
