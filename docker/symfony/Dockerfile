@@ -1,5 +1,3 @@
-# Symfony Dockerfile
-
 # Utiliser Alpine Linux comme image de base
 FROM alpine:latest
 
@@ -37,16 +35,15 @@ RUN rm symfony-cli.tar.gz
 # Configurer le répertoire de travail
 WORKDIR /var/www/symfony
 
-# Installer Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php --install-dir=/usr/bin --filename=composer && \
-    php -r "unlink('composer-setup.php');"
-
-# Copier les fichiers de l'application Symfony (décommentez si nécessaire)
+# Copier les fichiers de l'application Symfony
 COPY . /var/www/symfony
 
-# Installer les dépendances avec Composer (décommentez si nécessaire)
-RUN composer install --optimize-autoloader
+# Créer le répertoire var/cache s'il n'existe pas
+RUN mkdir -p /var/www/symfony/var/cache
+
+# Créer les répertoires var/cache et var/log s'ils n'existent pas et définir les permissions adéquates
+RUN mkdir -p /var/www/symfony/var/cache /var/www/symfony/var/log \
+    && chmod -R 777 /var/www/symfony/var/cache /var/www/symfony/var/log
 
 # Exposer le port utilisé par le serveur web Symfony
 EXPOSE 8000

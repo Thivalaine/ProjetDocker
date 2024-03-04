@@ -12,15 +12,17 @@ services:
     volumes:
       - ./docker/symfony:/var/www/html  # Synchronisation avec /var/www/html
     depends_on:
+      - composer
       - postgres
 
   composer:
+    build:
+      context: ./docker/composer
     image: nirdeo/composer_custom:latest
     volumes:
       - ./docker/symfony:/app
-    depends_on:
-      - symfony
-    command: install --ignore-platform-reqs --no-scripts
+    working_dir: /app
+    command: ["install", "--ignore-platform-reqs", "--no-scripts"]
 
   postgres:
     build:
