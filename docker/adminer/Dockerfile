@@ -13,7 +13,8 @@ RUN apk add --no-cache \
     php-json \
     php-session \
     php-simplexml \
-    php-mbstring
+    php-mbstring \
+    php-pdo_pgsql
 
 # Créer le répertoire pour les fichiers web
 RUN mkdir -p /var/www/html
